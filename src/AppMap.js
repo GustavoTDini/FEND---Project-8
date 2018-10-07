@@ -7,11 +7,11 @@ export default class AppMap extends Component {
     MapHelper.createMapScript().then((google) => {
       MapHelper.initMap();
     })
-  }
+  };
 
   render() {
     return (
       <div id="map"></div>
     );
-  }
-}
+  };
+};

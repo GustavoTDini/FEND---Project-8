@@ -1,12 +1,43 @@
+body{
+  margin: 0px;
+}
+
 .App {
   text-align: center;
   width: 100%;
   height: 100%;
+  font-family: 'Varela Round', sans-serif;
 }
 
 #map{
+  background-color: lightgreen;
   position: absolute;
   overflow: visible;
   width: 100%;
   height: 100%;
+}
+
+.header{
+  background-color: lightslategrey;
+  display: flex;
+  justify-content: center;
+  color: white;
+  margin:0px;
+}
+
+#openMenu{
+  display: block;
+  align-self: center;
+  position: fixed;
+  left: 20px;
+}
+
+.content{
+  display: flex;
+}
+
+.drawer{
+  width: 20%;
+  height: 100%;
+  background-color: grey;
 }

@@ -3,8 +3,8 @@ export function initMap() {
   this.map = new window.google.maps.Map(document.getElementById('map'), {
     center: {lat: -23.52973025799875, lng: -47.4653909},
     zoom: 14,
+    disableDefaultUI: true,
   });
-
 }
 
 export function createMapScript() {
