@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+
+/* *{
+  border: 1px solid red !important;
+} */
+
 body{
   margin: 0px;
 }
 
-.App {
+#root {
   text-align: center;
   width: 100%;
   height: 100%;
@@ -10,18 +16,24 @@ body{
 }
 
 #map{
-  background-color: lightgreen;
-  position: absolute;
-  overflow: visible;
-  width: 100%;
-  height: 100%;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
 }
 
 .header{
-  background-color: lightslategrey;
-  display: flex;
-  justify-content: center;
+  height: 50px;
+  background-color: #222222;
   color: white;
+  margin:0px;
+  z-index: 10;
+  position: fixed;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 22px;
+}
+
+.appTitle{
   margin:0px;
 }
 
@@ -32,12 +44,52 @@ body{
   left: 20px;
 }
 
+#menuIcon{
+  height: 36px;
+}
+
 .content{
+  position: fixed;
+  margin-top: 70px;
   display: flex;
+  width: -webkit-fill-available;
 }
 
 .drawer{
-  width: 20%;
-  height: 100%;
-  background-color: grey;
+  color: white;
+  width: 25%;
+  height: -webkit-fill-available;
+  background-color: #303030;
+  padding-bottom: 103px;
+}
+
+.search{
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 100%;
+  left: 0;
+  z-index: 5;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19);
+}
+
+.input{
+  width:100%;
+}
+
+.typeSelect{
+  margin-top: 15px;
+  width: 100%;
+}
+
+.resultList{
+  height: -webkit-fill-available;
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+}
+
+.resultPlace{
+  padding-left: 15px;
+  display: block;
+  text-align: justify;
 }

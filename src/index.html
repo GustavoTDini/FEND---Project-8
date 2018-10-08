@@ -8,20 +8,81 @@
     <title>React App</title>
   </head>
   <body>
-    <div id="root" class="App">
+    <div id="root">
       <header class="header">
         <div id="openMenu">
-          <img src="./icons/menu.png"/>
+          <img id="menuIcon"src="./icons/menu.png"/>
         </div>
-        <h1>Neighborhood Map</h1>
+        <h1 class="appTitle">Neighborhood Map</h1>
       </header>
       <div class="content">
         <div class="drawer">
-          Drawer
+          <div class="search">
+            Search
+            <input class="input"/>
+            <select class="typeSelect">
+              <option>1</option>
+              <option>2</option>
+            </select>
+          </div>
+          <div class="resultList">
+            <li class="resultPlace">
+              <p>1 - PlaceName</p>
+              <p>PlaceAdress</p>
+              <hr/>
+            </li>
+            <li class="resultPlace">
+              <p>2 - PlaceName</p>
+              <p>PlaceAdress</p>
+              <hr/>
+            </li>
+            <li class="resultPlace">
+              <p>3 - PlaceName</p>
+              <p>PlaceAdress</p>
+              <hr/>
+            </li>
+            <li class="resultPlace">
+              <p>4 - PlaceName</p>
+              <p>PlaceAdress</p>
+              <hr/>
+            </li>
+            <li class="resultPlace">
+              <p>5 - PlaceName</p>
+              <p>PlaceAdress</p>
+              <hr/>
+            </li>
+            <li class="resultPlace">
+              <p>6 - PlaceName</p>
+              <p>PlaceAdress</p>
+              <hr/>
+            </li>
+            <li class="resultPlace">
+              <p>7 - PlaceName</p>
+              <p>PlaceAdress</p>
+              <hr/>
+            </li>
+            <li class="resultPlace">
+              <p>8 - PlaceName</p>
+              <p>PlaceAdress</p>
+              <hr/>
+            </li>
+          </div>
         </div>
-        <div>
-          <div id="map">Map</div>
-        </div>
+        <div id="map">Map</div>
       </div>
+      <script>
+        var map;
+        function initMap() {
+          // Constructor creates a new map - only center and zoom are required.
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 40.7413549, lng: -73.9980244},
+            zoom: 19,
+            disableDefaultUI: true,
+          });
+        }
+      </script>
+      <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEPrsQgonZwOz6P7dJBR0ma-rlPBCeEc0&v=3&callback=initMap">
+      </script>
   </body>
 </html>
