@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import * as MapHelper from './MapHelper'
+import menuImg from './icons/menu.png'
 
 export default class MapHeader extends Component {
 
   render() {
     return (
       <header className="header">
-        <div className="openMenu">
-          <img src="https://placeimg.com/30/30/arch/grayscale"/>
+        <div id="openMenu">
+          <img id="menuIcon" src={menuImg} alt="Menu Icon"/>
         </div>
-        <h1>Neighborhood Map</h1>
+        <h1 className="appTitle">Neighborhood Map</h1>
       </header>
     );
   }

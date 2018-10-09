@@ -45,7 +45,8 @@ body{
 }
 
 #menuIcon{
-  height: 36px;
+  height: 48px;
+  width: 48px;
 }
 
 .content{
@@ -73,11 +74,14 @@ body{
 }
 
 .input{
+  font-size: 20px;
+  height: 32px;
   width:100%;
 }
 
 .typeSelect{
-  margin-top: 15px;
+  font-size: 15px;
+  margin-top: 25px;
   width: 100%;
 }
 
