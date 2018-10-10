@@ -8,6 +8,10 @@ body{
   margin: 0px;
 }
 
+p{
+  margin-left: 5px;
+}
+
 #root {
   text-align: center;
   width: 100%;
@@ -38,7 +42,7 @@ body{
 }
 
 #openMenu{
-  display: block;
+  display: none;
   align-self: center;
   position: fixed;
   left: 20px;
@@ -93,7 +97,6 @@ body{
 }
 
 .resultPlace{
-  padding-left: 15px;
   display: block;
   text-align: justify;
 }
