@@ -12,8 +12,8 @@ export default class MapPlaceList extends Component {
 
     return (
       <div>
-        <p>{place.id} - {place.title}</p>
-        <p>{String(place.locations)}</p>
+        <p>{place.index} - {place.title}</p>
+        <p>{place.address}</p>
         <hr/>
       </div>
     );

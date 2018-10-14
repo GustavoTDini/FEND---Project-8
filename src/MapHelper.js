@@ -1,8 +1,13 @@
+const ApiKey = 'AIzaSyDEPrsQgonZwOz6P7dJBR0ma-rlPBCeEc0';
+const clientId = 'XJKO2X12JL3NMHCHQUKCYONALVPSMMFUL1L4ROMSDMJ5M35G';
+const clientSecret = '230GFGABAMF15RX5FCBJI2UA0XXEJ3R5KXDN2IVYUQ1YUTVL';
+const city = "Sorocaba";
+const date = "20181014";
+const limit = 10;
+
 // Inicializa o Mapa
 export function initMap() {
   return this.map = new window.google.maps.Map(document.getElementById('map'), {
-    center: {lat: 40.7413549, lng: -73.9980244},
-    zoom: 14,
     disableDefaultUI: true,
   });
 }
@@ -20,7 +25,6 @@ export function createMapScript() {
       };
 
       // Load the Google Maps API
-      const ApiKey = 'AIzaSyDEPrsQgonZwOz6P7dJBR0ma-rlPBCeEc0';
       const script = document.createElement('script');
       script.async = true;
       script.defer = true;
@@ -33,13 +37,13 @@ export function createMapScript() {
   return this.googleMapsPromise;
 }
 
-export function populateMarkers(locations, map) {
+export function populateMarkers(places, map) {
   var markers = [];
   // The following group uses the location array to create an array of markers on initialize.
-  for (var i = 0; i < locations.length; i++) {
+  for (var i = 0; i < places.length; i++) {
     // Get the position from the location array.
-    var position = locations[i].location;
-    var title = locations[i].title;
+    var position = places[i].location;
+    var title = places[i].title;
     // Create a marker per location, and put into markers array.
     var marker = new window.google.maps.Marker({
       map: map,
@@ -52,4 +56,58 @@ export function populateMarkers(locations, map) {
     markers.push(marker);
   }
   return markers;
+}
+
+export const searchFourSquarePlaces = (query, categories) =>
+  fetch(createSearchUrl(query, categories), {
+    method: 'GET'})
+    .then(res => res.json())
+    .then(data => data.response.venues)
+    .catch(res => console.log("error" + res.meta.code));
+
+export function createPlacesArray(response){
+  let id, title, address, lat, lng, place
+  let places = [];
+  for (let i=0; i < response.length; i++){
+    id = response[i].id;
+    title = response[i].name;
+    address = response[i].location.address;
+    lat = response[i].location.lat;
+    lng = response[i].location.lng;
+    place = {"index" : i + 1 ,"id": id, "title": title, "address": address, location: {"lat": lat, "lng": lng}};
+    places.push(place);
+  }
+  return places;
+}
+
+export function createSearchUrl(query, categories){
+
+  let foursquareSearchUrl = new URL(`https://api.foursquare.com/v2/venues/search?`);
+  let UrlParams = new URLSearchParams(foursquareSearchUrl);
+  UrlParams.append('client_id', clientId);
+  UrlParams.append('client_secret', clientSecret);
+  UrlParams.append('near', city);
+
+  if (query){
+    UrlParams.append('query', query);
+  };
+  if (categories){
+    let categoriesList = categories.join(",");
+    UrlParams.append('categoryId', categoriesList);
+  };
+
+  UrlParams.append('limit', limit);
+  UrlParams.append('v', date);
+
+  return(foursquareSearchUrl + UrlParams.toString());
+}
+
+export function mapBoundaries(map, markers) {
+  var bounds = new window.google.maps.LatLngBounds();
+  // Extend the boundaries of the map for each marker and display the marker
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+    bounds.extend(markers[i].position);
+  }
+  map.fitBounds(bounds);
 }
