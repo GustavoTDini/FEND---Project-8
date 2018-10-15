@@ -6,6 +6,13 @@ import './App.css';
 import './Responsive.css'
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.updateQuery = this.updateQuery.bind(this);
+    this.categoriesSelect = this.categoriesSelect.bind(this);
+    this.updateMap = this.updateMap.bind(this);
+  }
+
   state = {
     places: [],
     query: "",
@@ -13,8 +20,27 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const{query, categories} = this.state;
+    MapHelper.createMapScript().then((google) => {
+      MapHelper.initMap();
+    })
+  };
 
+  updateQuery = (query) => {
+    this.setState({ query: query })
+  }
+
+  categoriesSelect = (selectedOption) => {
+    let newcategories = []
+    for (let i = 0; i < selectedOption.length; i++){
+      newcategories.push(selectedOption[i].value)
+    }
+    this.setState(state => ({
+      categories: newcategories
+    }))
+  };
+
+  updateMap() {
+    let {query, categories} = this.state;
     MapHelper.searchFourSquarePlaces(query, categories).then((response) => {
       let fetchplaces = MapHelper.createPlacesArray(response)
       MapHelper.createMapScript().then((google) => {
@@ -23,21 +49,26 @@ class App extends Component {
         MapHelper.mapBoundaries(map, markers);
       })
       this.setState(state => ({
-        places: fetchplaces
+        places: fetchplaces,
+        query: "",
+        categories: []
       }))
     })
-
-
-
-  };
+    this.updateQuery("");
+    this.categoriesSelect([]);
+  }
 
   render() {
-    const{places} = this.state;
-
+    const{places, query} = this.state;
     return (
       <div className="App">
         <MapHeader/>
-        <MapContent places={places}/>
+        <MapContent
+          places={places}
+          query={query}
+          updateQuery={this.updateQuery}
+          categoriesSelect={this.categoriesSelect}
+          updateMap={this.updateMap}/>
       </div>
     );
   }

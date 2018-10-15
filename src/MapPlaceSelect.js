@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Select from 'react-select';
+import PropTypes from 'prop-types';
 
 const options = [
   { value: '4bf58dd8d48988d17f941735', label:  'Cinema'},
@@ -20,6 +21,9 @@ const options = [
 ];
 
 export default class MapPlaceSelect extends Component {
+  static propTypes = {
+    categoriesSelect: PropTypes.func
+  };
 
   state = {
     selectedOption: null,
@@ -27,7 +31,7 @@ export default class MapPlaceSelect extends Component {
 
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
+    this.props.categoriesSelect(selectedOption);
   };
 
   render() {
