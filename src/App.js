@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import * as MapHelper from './MapHelper'
+import * as MapGoogleMapsAPIHelper from './MapGoogleMapsAPIHelper'
+import * as MapFourSquareAPIHelper from './MapFourSquareAPIHelper'
 import MapHeader from './MapHeader';
 import MapContent from './MapContent';
 import './App.css';
@@ -11,17 +12,20 @@ class App extends Component {
     this.updateQuery = this.updateQuery.bind(this);
     this.categoriesSelect = this.categoriesSelect.bind(this);
     this.updateMap = this.updateMap.bind(this);
+    this.hoverHighlightInOut = this.hoverHighlightInOut.bind(this);
+    this.selectOneMarker = this.selectOneMarker.bind(this);
   }
 
   state = {
     places: [],
     query: "",
-    categories: []
+    categories: [],
+    markers:[]
   }
 
   componentDidMount() {
-    MapHelper.createMapScript().then((google) => {
-      MapHelper.initMap();
+    MapGoogleMapsAPIHelper.createMapScript().then((google) => {
+      MapGoogleMapsAPIHelper.initMap();
     })
   };
 
@@ -41,21 +45,62 @@ class App extends Component {
 
   updateMap() {
     let {query, categories} = this.state;
-    MapHelper.searchFourSquarePlaces(query, categories).then((response) => {
-      let fetchplaces = MapHelper.createPlacesArray(response)
-      MapHelper.createMapScript().then((google) => {
-        let map = MapHelper.initMap();
-        let markers = MapHelper.populateMarkers(fetchplaces, map);
-        MapHelper.mapBoundaries(map, markers);
+    let fetchMarkers;
+    MapFourSquareAPIHelper.searchFourSquarePlaces(query, categories).then((response) => {
+      let fetchPlaces = MapFourSquareAPIHelper.createPlacesArray(response)
+      MapGoogleMapsAPIHelper.createMapScript().then((google) => {
+        let map = MapGoogleMapsAPIHelper.initMap();
+        if (!fetchPlaces || fetchPlaces[0].title !== "Venues Not Found"){
+          fetchMarkers = MapGoogleMapsAPIHelper.populateMarkers(fetchPlaces, map);
+          MapGoogleMapsAPIHelper.mapBoundaries(map, fetchMarkers);
+          this.setState(state => ({
+            markers: fetchMarkers
+          }))
+        }
       })
       this.setState(state => ({
-        places: fetchplaces,
-        query: "",
-        categories: []
+        places: fetchPlaces
       }))
     })
-    this.updateQuery("");
-    this.categoriesSelect([]);
+  }
+
+  hoverHighlightInOut(ev, index, trueFalse){
+    ev.preventDefault()
+    let {places, markers} = this.state;
+    index --;
+    places[index].highlight = trueFalse
+    this.setState(state => ({
+      places: places
+    }));
+    markers = MapGoogleMapsAPIHelper.highlightMarkers(markers, index, trueFalse);
+    this.setState(state => ({
+      markers: markers
+    }));
+  }
+
+  selectOneMarker(ev, index){
+    ev.preventDefault()
+    let {markers, places} = this.state;
+    index --;
+    if (places[index].selected === true){
+      places[index].selected = false;
+      for (let i=0; i < markers.length; i++){
+        markers[i].setVisible(true)
+      }
+    } else {
+      places[index].selected = true;
+      for (let i=0; i < markers.length; i++){
+        if (i !== index){
+            markers[i].setVisible(false)
+        }
+      }
+    }
+    this.setState(state => ({
+      markers: markers
+    }));
+    this.setState(state => ({
+      places: places
+    }));
   }
 
   render() {
@@ -68,7 +113,9 @@ class App extends Component {
           query={query}
           updateQuery={this.updateQuery}
           categoriesSelect={this.categoriesSelect}
-          updateMap={this.updateMap}/>
+          updateMap={this.updateMap}
+          hoverHighlightInOut = {this.hoverHighlightInOut}
+          selectOneMarker = {this.selectOneMarker}/>
       </div>
     );
   }

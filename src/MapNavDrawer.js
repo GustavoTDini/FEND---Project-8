@@ -10,7 +10,9 @@ export default class MapNavDrawer extends Component {
     query: PropTypes.string,
     updateQuery: PropTypes.func,
     categoriesSelect: PropTypes.func,
-    updateMap: PropTypes.func
+    updateMap: PropTypes.func,
+    hoverHighlightInOut: PropTypes.func,
+    selectOneMarker: PropTypes.func
   };
 
   changeQuery(e) {
@@ -19,6 +21,14 @@ export default class MapNavDrawer extends Component {
 
   doSearch(e){
     this.props.updateMap();
+  }
+
+  onHoverListInOut(ev, index, trueFalse){
+    this.props.hoverHighlightInOut(ev, index, trueFalse);
+  }
+
+  onClickList(ev, index){
+    this.props.selectOneMarker(ev, index);
   }
 
   render() {
@@ -42,7 +52,11 @@ export default class MapNavDrawer extends Component {
         </div>
         <div className="resultList">
         {places.map((place) =>
-            <li key={place.id} className="resultPlace">
+            <li key={place.id}
+                className={(place.highlight? 'resultPlaceHighlight' : 'resultPlace')}
+                onClick={(e) => this.onClickList(e, place.index)}
+                onMouseOver={(e) => this.onHoverListInOut(e, place.index, true)}
+                onMouseOut={(e) => this.onHoverListInOut(e, place.index, false)}>
               <MapPlaceList place={place}/>
             </li>
           )}

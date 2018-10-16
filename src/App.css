@@ -101,3 +101,9 @@ p{
   display: block;
   text-align: justify;
 }
+
+.resultPlaceHighlight{
+  background-color: #101010;
+  display: block;
+  text-align: justify;
+}

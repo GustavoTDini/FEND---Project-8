@@ -9,7 +9,9 @@ export default class MapContent extends Component {
     query: PropTypes.string,
     updateQuery: PropTypes.func,
     categoriesSelect: PropTypes.func,
-    updateMap: PropTypes.func
+    updateMap: PropTypes.func,
+    hoverHighlightInOut: PropTypes.func,
+    selectOneMarker: PropTypes.func
   };
 
   render() {
@@ -21,7 +23,9 @@ export default class MapContent extends Component {
         places={places}
         updateQuery={this.props.updateQuery}
         categoriesSelect={this.props.categoriesSelect}
-        updateMap={this.props.updateMap}/>
+        updateMap={this.props.updateMap}
+        hoverHighlightInOut = {this.props.hoverHighlightInOut}
+        selectOneMarker = {this.props.selectOneMarker}/>
       <div id="map"></div>
       </div>
     )
