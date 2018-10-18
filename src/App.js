@@ -47,20 +47,24 @@ class App extends Component {
     let {query, categories} = this.state;
     let fetchMarkers;
     MapFourSquareAPIHelper.searchFourSquarePlaces(query, categories).then((response) => {
-      let fetchPlaces = MapFourSquareAPIHelper.createPlacesArray(response)
-      MapGoogleMapsAPIHelper.createMapScript().then((google) => {
-        let map = MapGoogleMapsAPIHelper.initMap();
-        if (!fetchPlaces || fetchPlaces[0].title !== "Venues Not Found"){
-          fetchMarkers = MapGoogleMapsAPIHelper.populateMarkers(fetchPlaces, map);
-          MapGoogleMapsAPIHelper.mapBoundaries(map, fetchMarkers);
-          this.setState(state => ({
-            markers: fetchMarkers
-          }))
-        }
-      })
-      this.setState(state => ({
-        places: fetchPlaces
-      }))
+      if (response.meta.code === 200){
+        let fetchPlaces = MapFourSquareAPIHelper.createPlacesArray(response.response.venues)
+        MapGoogleMapsAPIHelper.createMapScript().then((google) => {
+          let map = MapGoogleMapsAPIHelper.initMap();
+          if (!fetchPlaces || fetchPlaces[0].title !== "Venues Not Found"){
+            fetchMarkers = MapGoogleMapsAPIHelper.populateMarkers(fetchPlaces, map);
+            MapGoogleMapsAPIHelper.mapBoundaries(map, fetchMarkers);
+            this.setState(state => ({
+              markers: fetchMarkers
+            }))
+          }
+        })
+        this.setState(state => ({
+          places: fetchPlaces
+        }))
+      } else{
+        console.log(response.meta.code);
+      }
     })
   }
 
@@ -85,15 +89,16 @@ class App extends Component {
     if (places[index].selected === true){
       places[index].selected = false;
       for (let i=0; i < markers.length; i++){
-        markers[i].setVisible(true)
+        markers[i].setVisible(true);
+        markers[i].setAnimation(window.google.maps.Animation.DROP);
       }
     } else {
-      places[index].selected = true;
       for (let i=0; i < markers.length; i++){
-        if (i !== index){
-            markers[i].setVisible(false)
-        }
+        markers[i].setVisible(false)
       }
+      places[index].selected = true;
+      markers[index].setVisible(true)
+      markers[index].setAnimation(window.google.maps.Animation.BOUNCE);
     }
     this.setState(state => ({
       markers: markers

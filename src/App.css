@@ -107,3 +107,37 @@ p{
   display: block;
   text-align: justify;
 }
+
+.infowindow{
+  background-color: #303030;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: 'Varela Round', sans-serif;
+  color: white;
+}
+
+.infowindowDiv{
+  display: flex;
+  justify-content: space-around;
+}
+
+.infowindowName{
+  font-size: 22px;
+}
+
+.infowindowData{
+  font-size: 12px;
+}
+
+.infowindowImg{
+
+}
+
+.infowindowRatings{
+  font-size: 26px;
+}
+
+.infowindowPrice{
+  font-size: 22px;
+  color: #FFBF33;
+}

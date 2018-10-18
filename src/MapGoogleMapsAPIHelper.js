@@ -1,5 +1,11 @@
-const ApiKey = 'AIzaSyDEPrsQgonZwOz6P7dJBR0ma-rlPBCeEc0';
+import React from 'react';
+import InfoWindow from './InfoWindow'
+import ReactDOM from 'react-dom/server';
+import defaultIcon from './icons/MapMarkerBlue.png';
+import highlightedIcon from './icons/MapMarkerRed.png';
+import * as MapFourSquareAPIHelper from './MapFourSquareAPIHelper';
 
+const ApiKey = 'AIzaSyDEPrsQgonZwOz6P7dJBR0ma-rlPBCeEc0';
 
 // Inicializa o Mapa
 export function initMap() {
@@ -8,6 +14,7 @@ export function initMap() {
     zoom: 14,
     disableDefaultUI: true,
   });
+
 }
 
 export function createMapScript() {
@@ -44,10 +51,17 @@ export function populateMarkers(places, map) {
       position: places[i].location,
       title: places[i].title,
       animation: window.google.maps.Animation.DROP,
-      id: places[i].id
+      id: places[i].id,
+      icon: defaultIcon
     });
     marker.addListener('click', function() {
       populateInfoWindow(this, map, largeInfowindow);
+    });
+    marker.addListener('mouseover', function() {
+      this.setIcon(highlightedIcon);
+    });
+    marker.addListener('mouseout', function() {
+      this.setIcon(defaultIcon);
     });
     markers.push(marker);
   }
@@ -55,42 +69,39 @@ export function populateMarkers(places, map) {
 }
 
 export function highlightMarkers(markers, index, trueFalse) {
-  let highlightedIcon = makeMarkerIcon('0091ff');
-  let defaulticon = makeMarkerIcon('FFFF24');
   for (let i =0; i< markers.length; i++){
     if (i === index && trueFalse){
       markers[i].setIcon(highlightedIcon);
     } else {
-      markers[i].setIcon(defaulticon);
+      markers[i].setIcon(defaultIcon);
     }
   }
   return markers;
 }
 
-// This function takes in a COLOR, and then creates a new marker
-// icon of that color. The icon will be 21 px wide by 34 high, have an origin
-// of 0, 0 and be anchored at 10, 34).
-function makeMarkerIcon(markerColor) {
-  var markerImage = new window.google.maps.MarkerImage(
-    'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
-    '|40|_|%E2%80%A2',
-    new window.google.maps.Size(21, 34),
-    new window.google.maps.Point(0, 0),
-    new window.google.maps.Point(10, 34),
-    new window.google.maps.Size(21,34));
-  return markerImage;
-}
-
 function populateInfoWindow(marker, map, infowindow) {
   // Check to make sure the infowindow is not already opened on this marker.
   if (infowindow.marker !== marker) {
-    infowindow.marker = marker;
-    infowindow.setContent('<div>' + marker.title + '</div>');
-    infowindow.open(map, marker);
-    // Make sure the marker property is cleared if the infowindow is closed.
-    infowindow.addListener('closeclick', function() {
-      infowindow.marker = null;
-    });
+    MapFourSquareAPIHelper.getFourSquareDetails(marker.id).then((responseVenue) => {
+      console.log(responseVenue);
+      if(responseVenue.meta.code === 200){
+        let venueObject = MapFourSquareAPIHelper.getVenueDetails(responseVenue.response.venue);
+        let InfoContent = ReactDOM.renderToString(<InfoWindow venue={venueObject}/>);
+        infowindow.marker = marker;
+        infowindow.setContent(InfoContent);
+        infowindow.open(map, marker);
+        // Make sure the marker property is cleared if the infowindow is closed.
+        infowindow.addListener('closeclick', function() {
+          infowindow.marker = null;
+        });
+        window.google.maps.event.addListener(map, "click", function(event) {
+          infowindow.close();
+        });
+      }
+      else{
+        console.log(responseVenue.meta.code);
+      }
+    })
   }
 }
 
