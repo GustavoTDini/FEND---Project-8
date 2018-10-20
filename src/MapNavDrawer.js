@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MapPlaceSelect from './MapPlaceSelect';
 import MapPlaceList from './MapPlaceList';
 import PropTypes from 'prop-types';
+import poweredByFourSquare from './images/Powered-by-Foursquare-full-color-300.png';
 
 
 export default class MapNavDrawer extends Component {
@@ -12,7 +13,8 @@ export default class MapNavDrawer extends Component {
     categoriesSelect: PropTypes.func,
     updateMap: PropTypes.func,
     hoverHighlightInOut: PropTypes.func,
-    selectOneMarker: PropTypes.func
+    selectOneMarker: PropTypes.func,
+    drawerOpen: PropTypes.bool
   };
 
   changeQuery(e) {
@@ -32,11 +34,12 @@ export default class MapNavDrawer extends Component {
   }
 
   render() {
-    const {places, query} = this.props;
+    const {places, query, drawerOpen} = this.props;
 
     return (
-      <div className="drawer">
+      <div className={(drawerOpen? 'drawer' : 'drawer drawerHide')}>
         <div className="search">
+          <img src={poweredByFourSquare} alt="Powered by Foursquare"/>
           <input
             className="input"
             type='text'

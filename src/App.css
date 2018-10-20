@@ -42,10 +42,11 @@ p{
 }
 
 #openMenu{
-  display: none;
+  /* display: none; */
   align-self: center;
   position: fixed;
   left: 20px;
+  cursor: pointer;
 }
 
 #menuIcon{
@@ -65,7 +66,11 @@ p{
   width: 25%;
   height: -webkit-fill-available;
   background-color: #303030;
-  padding-bottom: 200px;
+  padding-bottom: 250px;
+}
+
+.drawerHide{
+  transform: translate(-250px);
 }
 
 .search{
@@ -140,4 +145,51 @@ p{
 .infowindowPrice{
   font-size: 22px;
   color: #FFBF33;
+}
+
+.modal {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  margin: auto;
+  top: 20%;
+  right: 40px;
+  left: 40px;
+  background-color: #303030;
+  text-align: center;
+  font-family: 'Varela Round', sans-serif;
+  color: white;
+}
+
+.modalText {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15%;
+  font-size: 22px;
+}
+
+.modalButton{
+  font-size: 20px;
+  margin-top: 30%;
+  width:100%;
+}
+
+/* unvisited link */
+a:link {
+    color: Aqua;
+}
+
+/* visited link */
+a:visited {
+    color: Aquamarine;
+}
+
+/* mouse over link */
+a:hover {
+    color: DeepPink;
+}
+
+/* selected link */
+a:active {
+    color: LightSkyBlue ;
 }

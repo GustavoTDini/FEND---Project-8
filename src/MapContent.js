@@ -6,20 +6,21 @@ import PropTypes from 'prop-types';
 export default class MapContent extends Component {
   static propTypes = {
     places: PropTypes.array,
-    query: PropTypes.string,
     updateQuery: PropTypes.func,
     categoriesSelect: PropTypes.func,
     updateMap: PropTypes.func,
     hoverHighlightInOut: PropTypes.func,
-    selectOneMarker: PropTypes.func
+    selectOneMarker: PropTypes.func,
+    drawerOpen: PropTypes.bool
   };
 
   render() {
-    const {places} = this.props;
+    const {places, drawerOpen} = this.props;
 
     return (
       <div className="content">
       <MapNavDrawer
+        drawerOpen={drawerOpen}
         places={places}
         updateQuery={this.props.updateQuery}
         categoriesSelect={this.props.categoriesSelect}

@@ -3,8 +3,10 @@ import * as MapGoogleMapsAPIHelper from './MapGoogleMapsAPIHelper'
 import * as MapFourSquareAPIHelper from './MapFourSquareAPIHelper'
 import MapHeader from './MapHeader';
 import MapContent from './MapContent';
+import MapModal from './MapModal'
 import './App.css';
 import './Responsive.css'
+
 
 class App extends Component {
   constructor(props) {
@@ -14,13 +16,18 @@ class App extends Component {
     this.updateMap = this.updateMap.bind(this);
     this.hoverHighlightInOut = this.hoverHighlightInOut.bind(this);
     this.selectOneMarker = this.selectOneMarker.bind(this);
-  }
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
 
-  state = {
-    places: [],
-    query: "",
-    categories: [],
-    markers:[]
+    this.state = {
+      places: [],
+      query: "",
+      categories: [],
+      markers:[],
+      showModal: false,
+      errorCode:'',
+      drawerOpen: true
+    }
   }
 
   componentDidMount() {
@@ -43,11 +50,28 @@ class App extends Component {
     }))
   };
 
+  handleOpenModal (code) {
+    this.setState(state => ({
+      showModal: true
+    }));
+
+    this.setState(state => ({
+      errorCode: code
+    }));
+  }
+
+  handleCloseModal (ev) {
+    ev.preventDefault()
+    this.setState(state => ({
+      showModal: false
+    }));
+  }
+
   updateMap() {
     let {query, categories} = this.state;
     let fetchMarkers;
     MapFourSquareAPIHelper.searchFourSquarePlaces(query, categories).then((response) => {
-      if (response.meta.code === 200){
+      if(response.meta.code === 200){
         let fetchPlaces = MapFourSquareAPIHelper.createPlacesArray(response.response.venues)
         MapGoogleMapsAPIHelper.createMapScript().then((google) => {
           let map = MapGoogleMapsAPIHelper.initMap();
@@ -62,8 +86,8 @@ class App extends Component {
         this.setState(state => ({
           places: fetchPlaces
         }))
-      } else{
-        console.log(response.meta.code);
+      } else {
+        this.handleOpenModal(response.meta.code.toString());
       }
     })
   }
@@ -109,11 +133,16 @@ class App extends Component {
   }
 
   render() {
-    const{places, query} = this.state;
+    const{places, query, errorCode, showModal, drawerOpen} = this.state;
     return (
-      <div className="App">
+      <div id="App">
+        <MapModal
+          code={errorCode}
+          showModal={showModal}
+          closeModal={this.handleCloseModal}/>
         <MapHeader/>
         <MapContent
+          drawerOpen={drawerOpen}
           places={places}
           query={query}
           updateQuery={this.updateQuery}
