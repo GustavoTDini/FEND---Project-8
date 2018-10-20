@@ -2,20 +2,16 @@
   #openMenu{
     display:block;
   }
+}
 
-  .drawer{
+@media screen and (min-width:450px) and (max-width: 1024px) {
+  #openMenu{
     display:none;
   }
 }
 
-@media screen and (min-width:650px) and (max-width: 1024px) {
-  /* #openMenu{
-    display:none;
-  } */
-}
-
 @media screen and (min-width:1024px) {
-  /* #openMenu{
+  #openMenu{
     display:none;
-  } */
+  }
 }

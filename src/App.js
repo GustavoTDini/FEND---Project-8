@@ -8,7 +8,7 @@ import './App.css';
 import './Responsive.css'
 
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.updateQuery = this.updateQuery.bind(this);
@@ -18,6 +18,7 @@ class App extends Component {
     this.selectOneMarker = this.selectOneMarker.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.openCloseDrawer = this.openCloseDrawer.bind(this);
 
     this.state = {
       places: [],
@@ -76,7 +77,7 @@ class App extends Component {
         MapGoogleMapsAPIHelper.createMapScript().then((google) => {
           let map = MapGoogleMapsAPIHelper.initMap();
           if (!fetchPlaces || fetchPlaces[0].title !== "Venues Not Found"){
-            fetchMarkers = MapGoogleMapsAPIHelper.populateMarkers(fetchPlaces, map);
+            fetchMarkers = MapGoogleMapsAPIHelper.populateMarkers(fetchPlaces, map, this.handleCloseModal);
             MapGoogleMapsAPIHelper.mapBoundaries(map, fetchMarkers);
             this.setState(state => ({
               markers: fetchMarkers
@@ -132,6 +133,19 @@ class App extends Component {
     }));
   }
 
+  openCloseDrawer(ev){
+    ev.preventDefault()
+    let {drawerOpen} = this.state;
+    if (drawerOpen){
+      drawerOpen = false;
+    } else{
+      drawerOpen = true;
+    }
+    this.setState(state => ({
+      drawerOpen: drawerOpen
+    }));
+  }
+
   render() {
     const{places, query, errorCode, showModal, drawerOpen} = this.state;
     return (
@@ -140,7 +154,8 @@ class App extends Component {
           code={errorCode}
           showModal={showModal}
           closeModal={this.handleCloseModal}/>
-        <MapHeader/>
+        <MapHeader
+          openCloseDrawer={this.openCloseDrawer}/>
         <MapContent
           drawerOpen={drawerOpen}
           places={places}
@@ -154,5 +169,3 @@ class App extends Component {
     );
   }
 };
-
-export default App;

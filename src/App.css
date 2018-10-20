@@ -70,7 +70,12 @@ p{
 }
 
 .drawerHide{
-  transform: translate(-250px);
+  color: white;
+  width: 25%;
+  height: -webkit-fill-available;
+  background-color: #303030;
+  padding-bottom: 250px;
+  display: none;
 }
 
 .search{
@@ -83,6 +88,7 @@ p{
 }
 
 .input{
+  background-color: white;
   font-size: 20px;
   height: 32px;
   width:100%;

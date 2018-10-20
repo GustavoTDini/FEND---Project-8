@@ -1,8 +1,11 @@
 import React from 'react';
-import InfoWindow from './InfoWindow'
-import ReactDOM from 'react-dom/server';
+import InfoWindow from './InfoWindow';
+import App from './App';
+import MapModal from './MapModal';
+import ReactDOMServer from 'react-dom/server';
+import ReactDOM from 'react-dom';
 import defaultIcon from './icons/MapMarkerBlue.png';
-import highlightedIcon from './icons/MapMarkerRed.png';
+import highlightedIcon from './icons/MapMarkerPink.png';
 import * as MapFourSquareAPIHelper from './MapFourSquareAPIHelper';
 
 const ApiKey = 'AIzaSyDEPrsQgonZwOz6P7dJBR0ma-rlPBCeEc0';
@@ -42,7 +45,7 @@ export function createMapScript() {
   return this.googleMapsPromise;
 }
 
-export function populateMarkers(places, map) {
+export function populateMarkers(places, map, closeModal) {
   let markers = [];
   let largeInfowindow = new window.google.maps.InfoWindow();
   for (var i = 0; i < places.length; i++) {
@@ -55,7 +58,7 @@ export function populateMarkers(places, map) {
       icon: defaultIcon
     });
     marker.addListener('click', function() {
-      populateInfoWindow(this, map, largeInfowindow);
+      populateInfoWindow(this, map, largeInfowindow, closeModal);
     });
     marker.addListener('mouseover', function() {
       this.setIcon(highlightedIcon);
@@ -79,28 +82,29 @@ export function highlightMarkers(markers, index, trueFalse) {
   return markers;
 }
 
-function populateInfoWindow(marker, map, infowindow) {
+function populateInfoWindow(marker, map, infowindow, closeModal) {
+  let infoContent;
   // Check to make sure the infowindow is not already opened on this marker.
   if (infowindow.marker !== marker) {
     MapFourSquareAPIHelper.getFourSquareDetails(marker.id).then((responseVenue) => {
       console.log(responseVenue);
       if(responseVenue.meta.code === 200){
         let venueObject = MapFourSquareAPIHelper.getVenueDetails(responseVenue.response.venue);
-        let InfoContent = ReactDOM.renderToString(<InfoWindow venue={venueObject}/>);
-        infowindow.marker = marker;
-        infowindow.setContent(InfoContent);
-        infowindow.open(map, marker);
-        // Make sure the marker property is cleared if the infowindow is closed.
-        infowindow.addListener('closeclick', function() {
-          infowindow.marker = null;
-        });
-        window.google.maps.event.addListener(map, "click", function(event) {
-          infowindow.close();
-        });
+        infoContent = ReactDOMServer.renderToString(<InfoWindow venue={venueObject} response={'ok'}/>);
+      } else{
+        let code = responseVenue.meta.code.toString();
+        infoContent = ReactDOMServer.renderToString(<InfoWindow error={code} response={'error'}/>);
       }
-      else{
-        console.log(responseVenue.meta.code);
-      }
+      infowindow.marker = marker;
+      infowindow.setContent(infoContent);
+      infowindow.open(map, marker);
+      // Make sure the marker property is cleared if the infowindow is closed.
+      infowindow.addListener('closeclick', function() {
+        infowindow.marker = null;
+      });
+      window.google.maps.event.addListener(map, "click", function(event) {
+        infowindow.close();
+      });
     })
   }
 }

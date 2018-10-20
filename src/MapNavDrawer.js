@@ -37,7 +37,7 @@ export default class MapNavDrawer extends Component {
     const {places, query, drawerOpen} = this.props;
 
     return (
-      <div className={(drawerOpen? 'drawer' : 'drawer drawerHide')}>
+      <div className={(drawerOpen? 'drawer' : 'drawerHide')}>
         <div className="search">
           <img src={poweredByFourSquare} alt="Powered by Foursquare"/>
           <input

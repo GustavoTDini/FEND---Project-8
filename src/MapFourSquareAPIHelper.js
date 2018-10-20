@@ -140,3 +140,36 @@ function getPhoto(photos){
   }
   return placeholder;
 }
+
+export function createErrorMessage(code){
+  let codeMessage;
+  switch (code) {
+    case '400':
+      codeMessage = 'Bad Request';
+      break;
+    case '401':
+      codeMessage = 'Unauthorized';
+      break;
+    case '403':
+      codeMessage = 'Forbidden';
+      break;
+    case '404':
+      codeMessage = 'Not Found';
+      break;
+    case '405':
+      codeMessage = 'Method Not Allowed';
+      break;
+    case '409':
+      codeMessage = 'Conflict';
+      break;
+    case '429':
+      codeMessage = 'Daily call quota exceeded';
+      break;
+    case '500':
+      codeMessage = 'Internal Server Error';
+      break;
+    default:
+    codeMessage = 'Unknow Error';
+  }
+  return codeMessage;
+}
