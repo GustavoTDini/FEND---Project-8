@@ -7,7 +7,9 @@ import MapModal from './MapModal';
 import './App.css';
 import './Responsive.css';
 
-
+/**
+ * Componente principal do App aonde se concentra a source of truth
+ */
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -31,16 +33,29 @@ export default class App extends Component {
     }
   }
 
+/**
+ * No componentDidMount criamos e inicializamos ao mapa com uma promisse
+ */
   componentDidMount() {
     MapGoogleMapsAPIHelper.createMapScript().then((google) => {
       MapGoogleMapsAPIHelper.initMap();
     })
   };
 
+/**
+ * Função para atualizar a query
+ *
+ * @param query - string da busca
+ */
   updateQuery = (query) => {
     this.setState({ query: query })
   }
 
+/**
+ * Função para atualizar as categories conforme selecionadas em MapPlaceSelece
+ *
+ * @param selectedOption - opção a ser colocada no Array
+ */
   categoriesSelect = (selectedOption) => {
     let newcategories = []
     for (let i = 0; i < selectedOption.length; i++){
@@ -51,6 +66,11 @@ export default class App extends Component {
     }))
   };
 
+/**
+ * Função para abrir um modal, atualiza o codigo do erro para passar as informações corretas
+ *
+ * @param code - codigo do erro
+ */
   handleOpenModal (code) {
     this.setState(state => ({
       showModal: true
@@ -61,6 +81,11 @@ export default class App extends Component {
     }));
   }
 
+/**
+ * Função para fechar o modal
+ *
+ * @param ev - evento
+ */
   handleCloseModal (ev) {
     ev.preventDefault()
     this.setState(state => ({
@@ -68,6 +93,11 @@ export default class App extends Component {
     }));
   }
 
+/**
+ * Função para atualizar o mapa, irá utilizar os this.state query e categories, para procurar na API de search da foursquare
+ * verificar se não houve erro, e atualiza os markers e os limites, caso tenha erro abre o modal,
+ * atualiza a lista de lugares de this.state.places
+ */
   updateMap() {
     let {query, categories} = this.state;
     let fetchMarkers;
@@ -93,6 +123,13 @@ export default class App extends Component {
     })
   }
 
+/**
+ * Função para verificar se o cursor está em cima de um lugar da lista
+ *
+ * @param ev - evento
+ * @param index - o indice do marker selecionado
+ * @param trueFalse - Varivel recebida para verificar se o marker já está selecionado
+ */
   hoverHighlightInOut(ev, index, trueFalse){
     ev.preventDefault()
     let {places, markers} = this.state;
@@ -107,6 +144,12 @@ export default class App extends Component {
     }));
   }
 
+/**
+ * Função para deixar somente visivel o lugar clicado na lista
+ *
+ * @param ev - evento
+ * @param index - o indice do marker selecionado
+ */
   selectOneMarker(ev, index){
     ev.preventDefault()
     let {markers, places} = this.state;
@@ -133,6 +176,11 @@ export default class App extends Component {
     }));
   }
 
+  /**
+   * Função para abrir ou fechar o MapNavDrawer - deixar visivel ou invisivel
+   *
+   * @param ev - evento
+   */
   openCloseDrawer(ev){
     ev.preventDefault()
     let {drawerOpen} = this.state;

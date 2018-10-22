@@ -2,17 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as MapFourSquareAPIHelper from './MapFourSquareAPIHelper'
 
-
+/**
+ * Componente que cria os elementos internos da infowindow, caso não houver erro
+ * será mostrado as informações da Venue, caso contrario as informações sobre o erro
+ */
 export default class InfoWindow extends Component {
   static propTypes = {
+    /** codigo do erro a ser mostrado */
     error: PropTypes.string,
+    /** Json do local a ser informado */
     venue: PropTypes.object,
+    /** reposta do API - ok ou error */
     response: PropTypes.string,
   };
 
   render() {
     const {venue, error, response} = this.props;
-    console.log(response)
 
     if (response === "ok"){
       return (
@@ -31,7 +36,6 @@ export default class InfoWindow extends Component {
           </div>
         )
     } else if(response === "error"){
-      console.log(error)
       return(
         <div className="infowindow">
           <p className="modal-text">Sorry! Unable to Perform Request!</p>

@@ -5,13 +5,20 @@ import * as MapFourSquareAPIHelper from './MapFourSquareAPIHelper'
 
 ReactModal.setAppElement('#root');
 
+/**
+ * Componente com o modal para informar o erro caso a API falhe por algum motivo,
+ * utiliza o ReactModal
+ */
 export default class MapModal extends Component {
   static propTypes = {
+    /** codigo do erro */
     code: PropTypes.string,
+    /** bool verificando se o modal aberto */
     showModal: PropTypes.bool,
+    /** função para fechar o modal do App */
     closeModal: PropTypes.func,
   };
-
+  
   handleCloseModal (e) {
     this.props.closeModal(e)
   }

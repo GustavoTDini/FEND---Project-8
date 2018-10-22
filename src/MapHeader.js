@@ -2,8 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import menuImg from './icons/menu.png'
 
+/**
+ * Componente com o header do app, que poderá ou não ter o botão menu,
+ * dependendo do tamanho da tela
+ */
 export default class MapHeader extends Component {
   static propTypes = {
+    /** função para abrir e fechar o MapNavDrawer */
     openCloseDrawer: PropTypes.func,
   };
 

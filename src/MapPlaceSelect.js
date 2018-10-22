@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Select from 'react-select';
 import PropTypes from 'prop-types';
 
+// Valores e nomes das categorias
 const options = [
   { value: '4bf58dd8d48988d17f941735', label:  'Cinema'},
   { value: '4d4b7104d754a06370d81259', label: 'Arte e Lazer' },
@@ -20,12 +21,17 @@ const options = [
   { value: '4bf58dd8d48988d1fd941735', label: 'Shopping Center' },
 ];
 
+/**
+ * Componente com o seletor de categoria, utiliza o ReactSelect
+ */
 export default class MapPlaceSelect extends Component {
   static propTypes = {
+    /** função para selecionar as categorias lifted do App */
     categoriesSelect: PropTypes.func
   };
 
   state = {
+    /** array das opções selecionadas */
     selectedOption: null,
   };
 

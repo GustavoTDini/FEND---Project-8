@@ -7,7 +7,11 @@ import * as MapFourSquareAPIHelper from './MapFourSquareAPIHelper';
 
 const ApiKey = 'AIzaSyDEPrsQgonZwOz6P7dJBR0ma-rlPBCeEc0';
 
-// Inicializa o Mapa
+/**
+ * Função para iniciar o mapa do GoogleMaps
+ *
+ * @return o mapa criado
+ */
 export function initMap() {
   return this.map = new window.google.maps.Map(document.getElementById('map'), {
     center: {lat: -23.52973025799875, lng: -47.4653909},
@@ -17,19 +21,19 @@ export function initMap() {
 
 }
 
+/**
+ * Função para criar o script do google maps, ele cria uma promisse que somente estará resolvida
+ * caso o script já esteja ativo, evitando erros no React
+ *
+ * @return a promessa com a resolução do script
+ */
 export function createMapScript() {
-  // If we haven't already defined the promise, define it
   if (!this.googleMapsPromise) {
     this.googleMapsPromise = new Promise((resolve) => {
-      // Add a global handler for when the API finishes loading
       window.resolveGoogleMapsPromise = () => {
-        // Resolve the promise
         resolve(window.google);
-        // Tidy up
         delete window.resolveGoogleMapsPromise;
       };
-
-      // Load the Google Maps API
       const script = document.createElement('script');
       script.async = true;
       script.defer = true;
@@ -37,12 +41,20 @@ export function createMapScript() {
       document.body.appendChild(script);
     });
   }
-
-  // Return a promise for the Google Maps API
   return this.googleMapsPromise;
 }
 
-export function populateMarkers(places, map, closeModal) {
+
+/**
+ * Função para criar os marcadores no map, adiciona tambem as funções para cada markers
+ * para criar o InfoWindow
+ *
+ * @param places - o Array com os lugares a serem povoados
+ * @param map - o mapa aonde os markers serão colocados
+ *
+ * @return  array com os marcadores criados
+ */
+export function populateMarkers(places, map) {
   let markers = [];
   let largeInfowindow = new window.google.maps.InfoWindow();
   for (var i = 0; i < places.length; i++) {
@@ -55,7 +67,7 @@ export function populateMarkers(places, map, closeModal) {
       icon: defaultIcon
     });
     marker.addListener('click', function() {
-      populateInfoWindow(this, map, largeInfowindow, closeModal);
+      populateInfoWindow(this, map, largeInfowindow);
     });
     marker.addListener('mouseover', function() {
       this.setIcon(highlightedIcon);
@@ -68,6 +80,15 @@ export function populateMarkers(places, map, closeModal) {
   return markers;
 }
 
+/**
+ * Função testar os markers e deixa-los com um icone diferente com enfase
+ *
+ * @param markers - o Array de markers a serem testados
+ * @param index - o indice do marker selecionado
+ * @param trueFalse - Varivel recebida para verificar se o marker já está selecionado
+ *
+ * @return uma nova array de marker com a mudança no icone
+ */
 export function highlightMarkers(markers, index, trueFalse) {
   for (let i =0; i< markers.length; i++){
     if (i === index && trueFalse){
@@ -79,7 +100,14 @@ export function highlightMarkers(markers, index, trueFalse) {
   return markers;
 }
 
-function populateInfoWindow(marker, map, infowindow, closeModal) {
+/**
+ * Função criar o infowindow do logar selecionado
+ *
+ * @param marker - o markers aonde será aberto o InfoWindow
+ * @param map - o mapa aonde será visualizado
+ * @param infowindow - infowindow criada em populateMarkers de modo a ter somente 1 infowindow aberta
+ */
+function populateInfoWindow(marker, map, infowindow) {
   let infoContent;
   // Check to make sure the infowindow is not already opened on this marker.
   if (infowindow.marker !== marker) {
@@ -106,6 +134,12 @@ function populateInfoWindow(marker, map, infowindow, closeModal) {
   }
 }
 
+/**
+ * Função criar os limites do mapa a ser visualizado conforme os markers
+ *
+ * @param map - o mapa aonde será visualizado
+ * @param markers - o Array de markers a serem testados
+ */
 export function mapBoundaries(map, markers) {
   var bounds = new window.google.maps.LatLngBounds();
   // Extend the boundaries of the map for each marker and display the marker

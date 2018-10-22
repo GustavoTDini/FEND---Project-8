@@ -4,17 +4,28 @@ import MapPlaceList from './MapPlaceList';
 import PropTypes from 'prop-types';
 import poweredByFourSquare from './images/Powered-by-Foursquare-full-color-300.png';
 
-
+/**
+ * Componente da lateral aonde estará a busca e a lista dos resultados, poderá ser ou não visivel
+ * depdenddo do clique no botão menu de MapHeader, para responsividade
+ */
 export default class MapNavDrawer extends Component {
   static propTypes = {
+    /** array com a reposta dos places */
     places: PropTypes.array,
+    /** string de busca */
     query: PropTypes.string,
+    /** bool que define se o MapNavDrawer está visivel ou não */
+    drawerOpen: PropTypes.bool,
+    /** função para atualizar a lista com o query */
     updateQuery: PropTypes.func,
+    /** função para selecionar as categorias */
     categoriesSelect: PropTypes.func,
+    /** função para atualizar o mapa */
     updateMap: PropTypes.func,
+    /** função para definir se estamos como o mouse em um item da lista */
     hoverHighlightInOut: PropTypes.func,
+    /** função a ser chamada ao clicar um item */
     selectOneMarker: PropTypes.func,
-    drawerOpen: PropTypes.bool
   };
 
   changeQuery(e) {

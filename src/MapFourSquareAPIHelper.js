@@ -12,14 +12,27 @@ const notFound = "Venues Not Found";
 const defaultHighlight = false;
 const defaultShow = false;
 
+/**
+ * Função que usa o Api da foursquare para buscar as localidades conforme a busca e categorias
+ *
+ * @param query - query da busca a ser colocado na URL
+ * @param categories - array das categorias selecionadas
+ */
 export const searchFourSquarePlaces = (query, categories) =>
   fetch(createSearchUrl(query, categories), {
     method: 'GET'})
     .then(res => res.json())
     .catch(res => console.log("error" + res.meta.code));
 
+/**
+ * Função que usa o URLSearchParams para criar o URL de busca do foursquare
+ *
+ * @param query - query da busca a ser colocado na URL
+ * @param categories - array das categorias selecionadas
+ *
+ * @return - a Url a ser utilizada no API de busca
+ */
 export function createSearchUrl(query, categories){
-
   let foursquareSearchUrl = new URL(searchAPi);
   let UrlParams = new URLSearchParams(foursquareSearchUrl);
   UrlParams.append('client_id', clientId);
@@ -41,6 +54,13 @@ export function createSearchUrl(query, categories){
   return(foursquareSearchUrl + UrlParams.toString());
 }
 
+/**
+ * Função que cria uma array com as localidade que retorna da busca da foursquare searchAPi
+ *
+ * @param response - json com a resposta da URL
+ *
+ * @return - uma array com as localidades já organizadas para serem utilizadas no app
+ */
 export function createPlacesArray(response){
   let id, title, address, lat, lng, place
   let places = [];
@@ -80,12 +100,24 @@ export function createPlacesArray(response){
   }
 }
 
+/**
+ * Função que usa o Api da foursquare para receber os detalhes de uma localidade
+ *
+ * @param venueId - id da localidade a ser buscada
+ */
 export const getFourSquareDetails = (venueId) =>
   fetch(createDetailsUrl(venueId), {
     method: 'GET'})
     .then(res => res.json())
     .catch(res => console.log("error" + res.meta.code));
 
+/**
+ * Função que usa o URLSearchParams para criar o URL dos detalhes do foursquare
+ *
+ * @param venueId - id da localidade a ser buscada
+ *
+ * @return - a Url a ser utilizada no API de detalhes
+ */
 export function createDetailsUrl(venueId){
   let foursquareDetailsUrl = new URL(detailsApi);
   let UrlParams = new URLSearchParams(foursquareDetailsUrl);
@@ -95,9 +127,14 @@ export function createDetailsUrl(venueId){
   return(foursquareDetailsUrl + venueId + '?' + UrlParams.toString());
 }
 
-
+/**
+ * Função que cria um objeto com os detalhes de uma localidade
+ *
+ * @param venue - json com a resposta da URL
+ *
+ * @return - um objeto Json com as detalhes de uma localidade já organizadas para serem utilizadas no app
+ */
 export function getVenueDetails(venue){
-  console.log(venue);
   let venueObject = {};
   venueObject.id = testIfExist(venue.id, "Missing Id");
   venueObject.name = testIfExist(venue.name, "Missing Name");
@@ -112,6 +149,14 @@ export function getVenueDetails(venue){
   return venueObject;
 }
 
+/**
+ * Função para testar se a informação do Json exite
+ *
+ * @param test - valor a ser testado se existe
+ * @param defaultValue - valor que será colocado no objeto Json caso não houver tal dado
+ *
+ * @return - o valor a ser colocado no Json de modo a não ser null
+ */
 function testIfExist(test, defaultValue){
   if (test){
     return test;
@@ -120,6 +165,14 @@ function testIfExist(test, defaultValue){
   }
 }
 
+/**
+ * Função para criar a informação de preço
+ *
+ * @param price - informação dobre preço do Json
+ *
+ * @return - o valor a ser colocado no Json de modo a não ser null - poderá ser uma ?,
+ * ou um numero de $ correspondendo o preço
+ */
 function testPrice(price){
   let showPrice = '?';
   if (price){
@@ -131,6 +184,13 @@ function testPrice(price){
   return showPrice
 }
 
+/**
+ * Função para testar se existe uma foto nas informações da API
+ *
+ * @param photos - Json de photos da API
+ *
+ * @return - pode ser a URL da foto se houver, ou uma placeholder
+ */
 function getPhoto(photos){
   if(photos.count > 0){
     if (photos.groups[1]){
@@ -142,6 +202,13 @@ function getPhoto(photos){
   return placeholder;
 }
 
+/**
+ * Função para criar a mensagem de erro caso a API falhe
+ *
+ * @param code - Codigo de Erro
+ *
+ * @return - mensagem com o porque do erro
+ */
 export function createErrorMessage(code){
   let codeMessage;
   switch (code) {
