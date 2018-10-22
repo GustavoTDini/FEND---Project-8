@@ -23,9 +23,10 @@ export default class MapModal extends Component {
           isOpen={this.props.showModal}
           onRequestClose={(e) => this.handleCloseModal(e)}
           className="modal">
-          <p className="modalText">{`Error: ${this.props.code}`}</p>
-          <p className="modalText">{MapFourSquareAPIHelper.createErrorMessage(this.props.code)}</p>
-          <button className="modalButton" onClick={(e) => this.handleCloseModal(e)}>Close</button>
+          <p className="modal-text">Sorry! Unable to Perform Request!</p>
+          <p className="modal-text">{`Error: ${this.props.code}`}</p>
+          <p className="modal-text">{MapFourSquareAPIHelper.createErrorMessage(this.props.code)}</p>
+          <button className="modal-button" onClick={(e) => this.handleCloseModal(e)}>Close</button>
         </ReactModal>
       </div>
     );

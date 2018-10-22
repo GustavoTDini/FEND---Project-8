@@ -14,13 +14,13 @@ export default class MapHeader extends Component {
   render() {
     return (
       <header className="header">
-        <div id="openMenu">
-          <img id="menuIcon"
+        <div id="open-menu">
+          <img id="menu-icon"
             src={menuImg}
             alt="Menu Icon"
             onClick={(e) => this.handleDrawer(e)}/>
         </div>
-        <h1 className="appTitle">Neighborhood Map</h1>
+        <h1 className="app-title">Neighborhood Map</h1>
       </header>
     );
   }

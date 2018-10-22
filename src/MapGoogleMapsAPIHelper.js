@@ -1,9 +1,6 @@
 import React from 'react';
 import InfoWindow from './InfoWindow';
-import App from './App';
-import MapModal from './MapModal';
 import ReactDOMServer from 'react-dom/server';
-import ReactDOM from 'react-dom';
 import defaultIcon from './icons/MapMarkerBlue.png';
 import highlightedIcon from './icons/MapMarkerPink.png';
 import * as MapFourSquareAPIHelper from './MapFourSquareAPIHelper';

@@ -1,8 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Varela+Round');
 
-/* *{
-  border: 1px solid red !important;
-} */
+/* App Classes */
+
+#root {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  font-family: 'Varela Round', sans-serif;
+}
 
 body{
   margin: 0px;
@@ -12,17 +17,8 @@ p{
   margin-left: 5px;
 }
 
-#root {
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  font-family: 'Varela Round', sans-serif;
-}
 
-#map{
-  width: -webkit-fill-available;
-  height: -webkit-fill-available;
-}
+/* MapHeader Classes */
 
 .header{
   height: 50px;
@@ -37,22 +33,23 @@ p{
   font-size: 22px;
 }
 
-.appTitle{
-  margin:0px;
-}
-
-#openMenu{
-  /* display: none; */
+#open-menu{
   align-self: center;
   position: fixed;
   left: 20px;
   cursor: pointer;
 }
 
-#menuIcon{
+#menu-icon{
   height: 48px;
   width: 48px;
 }
+
+.app-title{
+  margin:0px;
+}
+
+/* MapContent Classes */
 
 .content{
   position: fixed;
@@ -60,6 +57,13 @@ p{
   display: flex;
   width: -webkit-fill-available;
 }
+
+#map{
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+}
+
+/* MapNavDrawer Classes */
 
 .drawer{
   color: white;
@@ -69,7 +73,7 @@ p{
   padding-bottom: 250px;
 }
 
-.drawerHide{
+.drawer-hide{
   color: white;
   width: 25%;
   height: -webkit-fill-available;
@@ -94,64 +98,35 @@ p{
   width:100%;
 }
 
-.typeSelect{
-  font-size: 15px;
-  margin-top: 25px;
-  margin-bottom: 25px;
-  width: 100%;
-}
-
-.resultList{
+.result-list{
   height: -webkit-fill-available;
   display: flex;
   overflow-y: auto;
   flex-direction: column;
 }
 
-.resultPlace{
+.result-place{
   display: block;
   text-align: justify;
 }
 
-.resultPlaceHighlight{
+.result-place-highlight{
   background-color: #101010;
   display: block;
   text-align: justify;
 }
 
-.infowindow{
-  background-color: #303030;
-  border-radius: 5px;
-  padding: 10px;
-  font-family: 'Varela Round', sans-serif;
-  color: white;
+/* MapPlaceSelect Classes */
+
+.type-select{
+  font-size: 15px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  width: 100%;
+  color: black;
 }
 
-.infowindowDiv{
-  display: flex;
-  justify-content: space-around;
-}
-
-.infowindowName{
-  font-size: 22px;
-}
-
-.infowindowData{
-  font-size: 12px;
-}
-
-.infowindowImg{
-
-}
-
-.infowindowRatings{
-  font-size: 26px;
-}
-
-.infowindowPrice{
-  font-size: 22px;
-  color: #FFBF33;
-}
+/* MapModal Classes */
 
 .modal {
   width: 300px;
@@ -167,35 +142,71 @@ p{
   color: white;
 }
 
-.modalText {
+.modal-text {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 15%;
+  margin-top: 10%;
   font-size: 22px;
 }
 
-.modalButton{
+.modal-button{
   font-size: 20px;
-  margin-top: 30%;
+  margin-top: 10%;
   width:100%;
 }
 
-/* unvisited link */
+/* InfoWindow Classes */
+
+.infowindow{
+  background-color: #303030;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: 'Varela Round', sans-serif;
+  color: white;
+}
+
+.infowindow-div{
+  display: flex;
+  justify-content: space-around;
+}
+
+.infowindow-name{
+  font-size: 22px;
+}
+
+.infowindow-data{
+  font-size: 12px;
+}
+
+.infowindow-img{
+  height: 300px;
+  width: 300px;
+  object-fit: cover;
+}
+
+.infowindow-ratings{
+  font-size: 26px;
+}
+
+.infowindow-price{
+  font-size: 22px;
+  color: #FFBF33;
+}
+
+/* Links Classes */
+
 a:link {
     color: Aqua;
 }
 
-/* visited link */
 a:visited {
     color: Aquamarine;
 }
 
-/* mouse over link */
 a:hover {
     color: DeepPink;
 }
 
-/* selected link */
 a:active {
     color: LightSkyBlue ;
 }

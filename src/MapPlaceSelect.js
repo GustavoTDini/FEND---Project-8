@@ -38,10 +38,9 @@ export default class MapPlaceSelect extends Component {
     const { selectedOption } = this.state;
     return (
       <Select
-        className="typeSelect basic-multi-select"
+        className="type-select"
         isMulti
         name="types"
-        classNamePrefix="select"
         value={selectedOption}
         onChange={this.handleChange}
         options={options}

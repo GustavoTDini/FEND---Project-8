@@ -37,7 +37,7 @@ export default class MapNavDrawer extends Component {
     const {places, query, drawerOpen} = this.props;
 
     return (
-      <div className={(drawerOpen? 'drawer' : 'drawerHide')}>
+      <div className={(drawerOpen? 'drawer' : 'drawer-hide')}>
         <div className="search">
           <img src={poweredByFourSquare} alt="Powered by Foursquare"/>
           <input
@@ -47,16 +47,15 @@ export default class MapNavDrawer extends Component {
             value={query}
             onChange={(event) => this.changeQuery(event.target.value)}/>
           <MapPlaceSelect
-            className="typeSelect"
             categoriesSelect={this.props.categoriesSelect}/>
           <button
             className="input"
             onClick={(e) => this.doSearch(e)}>Search</button>
         </div>
-        <div className="resultList">
+        <div className="result-list">
         {places.map((place) =>
             <li key={place.id}
-                className={(place.highlight? 'resultPlaceHighlight' : 'resultPlace')}
+                className={(place.highlight? 'result-place-highlight' : 'result-place')}
                 onClick={(e) => this.onClickList(e, place.index)}
                 onMouseOver={(e) => this.onHoverListInOut(e, place.index, true)}
                 onMouseOut={(e) => this.onHoverListInOut(e, place.index, false)}>
