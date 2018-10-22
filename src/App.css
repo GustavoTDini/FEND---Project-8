@@ -15,6 +15,7 @@ body{
 
 p{
   margin-left: 5px;
+  margin-right: 5px;
 }
 
 
@@ -66,6 +67,7 @@ p{
 /* MapNavDrawer Classes */
 
 .drawer{
+  font-size: 18px;
   color: white;
   width: 25%;
   height: -webkit-fill-available;
@@ -74,12 +76,14 @@ p{
 }
 
 .drawer-hide{
-  color: white;
-  width: 25%;
-  height: -webkit-fill-available;
-  background-color: #303030;
-  padding-bottom: 250px;
   display: none;
+}
+
+.four-square-logo{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+
 }
 
 .search{
@@ -158,9 +162,10 @@ p{
 /* InfoWindow Classes */
 
 .infowindow{
+  width: 320px;
   background-color: #303030;
   border-radius: 5px;
-  padding: 10px;
+  padding: 5px;
   font-family: 'Varela Round', sans-serif;
   color: white;
 }
@@ -179,8 +184,8 @@ p{
 }
 
 .infowindow-img{
-  height: 300px;
-  width: 300px;
+  height: 250px;
+  width: 250px; */
   object-fit: cover;
 }
 

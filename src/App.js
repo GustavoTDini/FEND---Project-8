@@ -3,9 +3,9 @@ import * as MapGoogleMapsAPIHelper from './MapGoogleMapsAPIHelper'
 import * as MapFourSquareAPIHelper from './MapFourSquareAPIHelper'
 import MapHeader from './MapHeader';
 import MapContent from './MapContent';
-import MapModal from './MapModal'
+import MapModal from './MapModal';
 import './App.css';
-import './Responsive.css'
+import './Responsive.css';
 
 
 export default class App extends Component {

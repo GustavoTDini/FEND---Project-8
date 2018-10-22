@@ -39,7 +39,7 @@ export default class MapNavDrawer extends Component {
     return (
       <div className={(drawerOpen? 'drawer' : 'drawer-hide')}>
         <div className="search">
-          <img src={poweredByFourSquare} alt="Powered by Foursquare"/>
+          <img className="four-square-logo" src={poweredByFourSquare} alt="Powered by Foursquare"/>
           <input
             className="input"
             type='text'

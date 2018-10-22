@@ -47,6 +47,7 @@ export function createPlacesArray(response){
   let listIndex = 1;
   if (!response || response.length === 0 ){
     title = notFound;
+    id = 0;
     place = {"index" : listIndex ,
              "id": id,
              "title": title,

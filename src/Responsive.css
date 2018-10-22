@@ -1,17 +1,132 @@
-@media screen and (max-width:450px) {
+@media all and (min-width:1024px){
+
+  /* MapHeader Responsive Classes */
+  #open-menu{
+    display:none;
+  }
+
+  /* MapNavDrawer Responsive Classes */
+  .drawer{
+    width: 25%;
+  }
+}
+@media all and (min-width: 480px) and (max-width: 1023px){
+
+  /* MapHeader Responsive Classes */
   #open-menu{
     display:block;
   }
-}
 
-@media screen and (min-width:450px) and (max-width: 1024px) {
-  #open-menu{
-    display:none;
+  #menu-icon{
+    height: 48px;
+    width: 48px;
   }
-}
 
-@media screen and (min-width:1024px) {
+  .app-title{
+    font-size: 32px;
+  }
+
+  /* MapNavDrawer Responsive Classes */
+
+  .drawer{
+    width: 30%;
+    font-size: 15px;
+  }
+
+  .input{
+    font-size: 18px;
+  }
+
+  /* InfoWindow Responsive Classes */
+
+  .infowindow{
+    width: 250px;
+  }
+
+  .infowindow-name{
+    font-size: 18px;
+  }
+
+  .infowindow-data{
+    font-size: 10px;
+  }
+
+  .infowindow-img{
+    height: 200px;
+    width: 200px;
+  }
+
+  .infowindow-ratings{
+    font-size: 22px;
+  }
+
+  .infowindow-price{
+    font-size: 18px;
+  }
+
+
+}
+@media all and (max-width: 479px) {
+
+  /* MapHeader Responsive Classes */
   #open-menu{
-    display:none;
+    display:block;
+    top: 20px;
+  }
+
+  #menu-icon{
+    height: 32px;
+    width: 32px;
+  }
+
+  .app-title{
+    font-size: 15px;
+    text-align: right;
+    margin-right: 20px;
+    margin-top: 15px;
+  }
+
+  /* MapNavDrawer Responsive Classes */
+  .drawer{
+    font-size: 12px;
+    width: 250px;
+  }
+
+  .input{
+    font-size: 15px;
+    height: 25px;
+  }
+
+  /* InfoWindow Responsive Classes */
+
+  .infowindow{
+    width: 150px;
+  }
+
+  .infowindow-name{
+    font-size: 15px;
+  }
+
+  .infowindow-data{
+    font-size: 8px;
+  }
+
+  .infowindow-img{
+    height: 100px;
+    width: 100px;
+  }
+
+  .infowindow-ratings{
+    font-size: 18px;
+  }
+
+  .infowindow-price{
+    font-size: 15px;
+  }
+
+  /* Modal Responsive Classes */
+
+  .modal-text {
+    font-size: 15px;
   }
 }
