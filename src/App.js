@@ -29,7 +29,8 @@ export default class App extends Component {
       markers:[],
       showModal: false,
       errorCode:'',
-      drawerOpen: true
+      drawerOpen: true,
+      largeInfowindow: null,
     }
   }
 
@@ -39,7 +40,10 @@ export default class App extends Component {
   componentDidMount() {
     MapGoogleMapsAPIHelper.createMapScript().then((google) => {
       MapGoogleMapsAPIHelper.initMap();
+      let largeInfowindow = new window.google.maps.InfoWindow();
+      this.setState({ largeInfowindow: largeInfowindow })
     })
+
   };
 
 /**
@@ -99,7 +103,7 @@ export default class App extends Component {
  * atualiza a lista de lugares de this.state.places
  */
   updateMap() {
-    let {query, categories} = this.state;
+    let {query, categories, largeInfowindow} = this.state;
     let fetchMarkers;
     MapFourSquareAPIHelper.searchFourSquarePlaces(query, categories).then((response) => {
       if(response.meta.code === 200){
@@ -107,7 +111,7 @@ export default class App extends Component {
         MapGoogleMapsAPIHelper.createMapScript().then((google) => {
           let map = MapGoogleMapsAPIHelper.initMap();
           if (!fetchPlaces || fetchPlaces[0].title !== "Venues Not Found"){
-            fetchMarkers = MapGoogleMapsAPIHelper.populateMarkers(fetchPlaces, map, this.handleCloseModal);
+            fetchMarkers = MapGoogleMapsAPIHelper.populateMarkers(fetchPlaces, map, largeInfowindow);
             MapGoogleMapsAPIHelper.mapBoundaries(map, fetchMarkers);
             this.setState(state => ({
               markers: fetchMarkers
@@ -152,7 +156,7 @@ export default class App extends Component {
  */
   selectOneMarker(ev, index){
     ev.preventDefault()
-    let {markers, places} = this.state;
+    let {markers, places, largeInfowindow} = this.state;
     index --;
     if (places[index].selected === true){
       places[index].selected = false;
@@ -167,6 +171,8 @@ export default class App extends Component {
       places[index].selected = true;
       markers[index].setVisible(true)
       markers[index].setAnimation(window.google.maps.Animation.BOUNCE);
+      let map = markers[index].getMap();
+      MapGoogleMapsAPIHelper.populateInfoWindow(markers[index], map, largeInfowindow);
     }
     this.setState(state => ({
       markers: markers

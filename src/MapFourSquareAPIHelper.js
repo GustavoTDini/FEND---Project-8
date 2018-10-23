@@ -22,7 +22,7 @@ export const searchFourSquarePlaces = (query, categories) =>
   fetch(createSearchUrl(query, categories), {
     method: 'GET'})
     .then(res => res.json())
-    .catch(res => console.log("error" + res.meta.code));
+    .catch(res => console.log("error" + res.Json().meta.code));
 
 /**
  * Função que usa o URLSearchParams para criar o URL de busca do foursquare
@@ -109,7 +109,7 @@ export const getFourSquareDetails = (venueId) =>
   fetch(createDetailsUrl(venueId), {
     method: 'GET'})
     .then(res => res.json())
-    .catch(res => console.log("error" + res.meta.code));
+    .catch(res => console.log("error" + res.Json().meta.code));
 
 /**
  * Função que usa o URLSearchParams para criar o URL dos detalhes do foursquare
@@ -145,7 +145,6 @@ export function getVenueDetails(venue){
   venueObject.ratingColor = testIfExist(venue.ratingColor, "#ffffff");
   venueObject.description = testIfExist(venue.description, "NoDescription");
   venueObject.photo = getPhoto(venue.photos);
-  console.log(venueObject);
   return venueObject;
 }
 

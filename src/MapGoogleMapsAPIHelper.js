@@ -54,9 +54,9 @@ export function createMapScript() {
  *
  * @return  array com os marcadores criados
  */
-export function populateMarkers(places, map) {
+export function populateMarkers(places, map, largeInfowindow) {
   let markers = [];
-  let largeInfowindow = new window.google.maps.InfoWindow();
+
   for (var i = 0; i < places.length; i++) {
     var marker = new window.google.maps.Marker({
       map: map,
@@ -66,6 +66,7 @@ export function populateMarkers(places, map) {
       id: places[i].id,
       icon: defaultIcon
     });
+    
     marker.addListener('click', function() {
       populateInfoWindow(this, map, largeInfowindow);
     });
@@ -107,7 +108,7 @@ export function highlightMarkers(markers, index, trueFalse) {
  * @param map - o mapa aonde será visualizado
  * @param infowindow - infowindow criada em populateMarkers de modo a ter somente 1 infowindow aberta
  */
-function populateInfoWindow(marker, map, infowindow) {
+export function populateInfoWindow(marker, map, infowindow) {
   let infoContent;
   // Check to make sure the infowindow is not already opened on this marker.
   if (infowindow.marker !== marker) {
