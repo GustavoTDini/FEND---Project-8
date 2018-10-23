@@ -81,7 +81,7 @@ export default class MapNavDrawer extends Component {
         {places.map((place) =>
             <li key={place.id}
                 ref = {this.listFocus}
-                tabindex = "0"
+                tabIndex = "0"
                 aria-label={place.title}
                 className={(place.highlight? 'result-place-highlight' : 'result-place')}
                 onClick={(e) => this.onClickList(e, place.index)}
