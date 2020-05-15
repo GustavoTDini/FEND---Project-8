@@ -1,7 +1,7 @@
 import placeholder from './images/placeholder.svg';
 
-const clientId = 'XJKO2X12JL3NMHCHQUKCYONALVPSMMFUL1L4ROMSDMJ5M35G';
-const clientSecret = '230GFGABAMF15RX5FCBJI2UA0XXEJ3R5KXDN2IVYUQ1YUTVL';
+const clientId = 'xx';
+const clientSecret = 'xx';
 const detailsApi = 'https://api.foursquare.com/v2/venues/'
 const searchAPi = 'https://api.foursquare.com/v2/venues/search?'
 const city = "Sorocaba";

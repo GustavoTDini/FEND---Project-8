@@ -5,7 +5,7 @@ import defaultIcon from './icons/MapMarkerBlue.png';
 import highlightedIcon from './icons/MapMarkerPink.png';
 import * as MapFourSquareAPIHelper from './MapFourSquareAPIHelper';
 
-const ApiKey = 'AIzaSyDEPrsQgonZwOz6P7dJBR0ma-rlPBCeEc0';
+const ApiKey = 'x';
 
 /**
  * Função para iniciar o mapa do GoogleMaps
@@ -66,7 +66,7 @@ export function populateMarkers(places, map, largeInfowindow) {
       id: places[i].id,
       icon: defaultIcon
     });
-    
+
     marker.addListener('click', function() {
       populateInfoWindow(this, map, largeInfowindow);
     });
